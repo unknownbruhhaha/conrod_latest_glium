@@ -1,10 +1,11 @@
 //! A glium backend for rendering conrod primitives.
-
 extern crate conrod_core;
 #[macro_use]
 extern crate glium;
 
 use conrod_core::{color, image, render, text, Rect, Scalar};
+
+mod glium_events_conversion;
 
 /// A `Command` describing a step in the drawing process.
 #[derive(Clone, Debug)]

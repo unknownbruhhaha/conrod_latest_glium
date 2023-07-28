@@ -19,8 +19,7 @@ conrod_core = "0.76"
 glium = "0.32.1"
 
 [dev-dependencies]
-conrod_example_shared = { path = "../conrod_example_shared", version = "0.76" }
-conrod_winit = { path = "../conrod_winit", version = "0.76" }
+conrod_winit = "0.76"
 find_folder = "0.3.0"
 image = "0.22"
 petgraph = "0.4"

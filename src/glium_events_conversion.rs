@@ -1,5 +1,5 @@
-use conrod_core::{event::Input, input::Button};
-use glium::glutin::{event::{WindowEvent, MouseButton}, window::Window};
+use conrod_core::{event::Input, input::Button, Ui};
+use glium::glutin::{event::{WindowEvent, MouseButton}, window::Window, dpi::PhysicalSize};
 
 macro_rules! convert_key {
     ($keycode:expr) => {{
@@ -108,11 +108,11 @@ macro_rules! convert_key {
 }
 
 
-pub fn convert_glium_event(event: &WindowEvent, window: &Window) -> Option<Input> {
+pub fn convert_glium_event(event: &WindowEvent, window_size: &PhysicalSize<u32>) -> Option<Input> {
     match event {
         WindowEvent::CursorMoved { device_id: _, position, .. } => {
-            let tx = |x: conrod_core::Scalar| x - window.inner_size().width as f64 / 2.0;
-            let ty = |y: conrod_core::Scalar| -(y - window.inner_size().height as f64 / 2.0);
+            let tx = |x: conrod_core::Scalar| x - window_size.width as f64 / 2.0;
+            let ty = |y: conrod_core::Scalar| -(y - window_size.height as f64 / 2.0);
 
             return Some(Input::Motion(conrod_core::input::Motion::MouseCursor { x: tx(position.x), y: ty(position.y) }));
         },
@@ -175,10 +175,32 @@ pub fn convert_glium_event(event: &WindowEvent, window: &Window) -> Option<Input
                 None => return None, 
             }
         },
-
-
         _ => return None,
     }
 }
 
 
+pub fn handle_glium_event(ui: &mut Ui, event: &WindowEvent, window: &Window) -> WasEventHandled {
+    match event {
+        WindowEvent::Resized(size) => {
+            ui.win_w = size.width as f64;
+            ui.win_h = size.height as f64;
+            return WasEventHandled::Yes;
+        },
+        _ => {
+            let conrod_event_result = convert_glium_event(event, &window.inner_size()); 
+            match conrod_event_result {
+                Some(conrod_event) => {
+                    ui.handle_event(conrod_event);
+                    return WasEventHandled::Yes;
+                },
+                None => return WasEventHandled::No
+            }
+        }
+    }
+}
+
+pub enum WasEventHandled {
+    Yes,
+    No
+}

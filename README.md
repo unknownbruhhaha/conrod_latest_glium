@@ -1,5 +1,5 @@
 # conrod_latest_glium
-just [conrod_glium](https://github.com/pistondevelopers/conrod), but with updated [glium(v0.32.1)](https://github.com/glium/glium)
+just [conrod_glium](https://github.com/pistondevelopers/conrod), but with updated [glium(v0.32.1)](https://github.com/glium/glium) and easier event handling
 ## why? 
 because of this: 
 

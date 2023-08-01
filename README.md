@@ -15,4 +15,4 @@ i'm not planing to change something else in conrod_glium
 ## crates.io? 
 idk actually
 
-i just updated one dependency and added 2 functions for easier event handling in conrod_glium, so i don't know
+i just updated one dependency and added 2 functions in conrod_glium, so i don't know
